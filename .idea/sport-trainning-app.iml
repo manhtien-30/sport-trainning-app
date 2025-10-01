@@ -6,6 +6,10 @@
       <excludeFolder url="file://$MODULE_DIR$/fontend/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/fontend/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/fontend/build" />
+      <excludeFolder url="file://$MODULE_DIR$/fontend/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/fontend/ios/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/fontend/macos/Flutter/ephemeral" />
+      <excludeFolder url="file://$MODULE_DIR$/server/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
