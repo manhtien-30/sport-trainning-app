@@ -4,7 +4,7 @@ Monorepo containing:
 - server: Java Spring Boot backend (Maven, Java 21)
 - fontend: Flutter client application (Dart/Flutter SDK)
 
-
+~
 ## Overview
 A sports training application with a Spring Boot REST backend and a Flutter cross‑platform client. The backend is prepared for PostgreSQL via Spring Data JPA/JDBC; the Flutter app is the default starter ready to connect to the API.
 
