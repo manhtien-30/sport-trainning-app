@@ -1,77 +1,89 @@
-package com.example.server.domain.model;
+package com.example.server.enties.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "accounts")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@Builder(toBuilder = true)
+@Table(name = "accounts")
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "account_id", nullable = false)
     private UUID id;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
+    @NotNull
     @Column(name = "email", nullable = false, length = Integer.MAX_VALUE)
     private String email;
 
+    @NotNull
     @Column(name = "password_hash", nullable = false, length = Integer.MAX_VALUE)
-    private String passwordHash;
+    private String password;
 
-    @ColumnDefault("now()")
+    @NotNull
+    @Builder.Default
     @Column(name = "created_at", nullable = false)
-    private OffsetDateTime createdAt;
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 
-    @ColumnDefault("now()")
+    @NotNull
+    @Builder.Default
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt;
+    private OffsetDateTime updatedAt = OffsetDateTime.now();
 
     @Column(name = "last_login")
     private OffsetDateTime lastLogin;
 
-    @ColumnDefault("false")
+    @NotNull
+    @Builder.Default
     @Column(name = "is_verified", nullable = false)
     private Boolean isVerified = false;
 
-    @ColumnDefault("true")
+    @NotNull
+    @Builder.Default
     @Column(name = "is_active", nullable = false)
-    private Boolean isActive = false;
+    private Boolean isActive = true;
 
-    @ColumnDefault("false")
+    @NotNull
+    @Builder.Default
     @Column(name = "is_locked", nullable = false)
     private Boolean isLocked = false;
 
-    @ColumnDefault("0")
-    @Column(name = "failed_attempts", nullable = false)
-    private Short failedAttempts;
+    @NotNull
+    @Builder.Default
+    @Column(name = "failed_attempts")
+    private Short failedAttempts = 0;
 
+    @NotNull
+    @Builder.Default
     @ColumnDefault("false")
     @Column(name = "mfa_enabled", nullable = false)
     private Boolean mfaEnabled = false;
 
-    @OneToOne(mappedBy = "account")
-    private AccountProfile accountProfile;
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "account_id", nullable = false)
+    private AccountProfiles accountProfiles;
 
     @ManyToMany
     @JoinTable(name = "account_roles",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "account")
-    private Set<PasswordHistory> passwordHistories = new LinkedHashSet<>();
+    private Set<Roles> roles = new LinkedHashSet<>();
 
 }
-
