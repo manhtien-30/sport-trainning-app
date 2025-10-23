@@ -1,20 +1,21 @@
 spring:
   application:
     name: server
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 30102001
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://db:5432/postgres
+#    username: postgres
+#    password: 30102001
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+  docker:
+    compose:
+      enabled: true
+      file: src/main/docker/Docker-compose.yaml
 jwt:
   header: Authorization
   secret: ==================springboot=jwt=example========================
-server:
-  port: 8080

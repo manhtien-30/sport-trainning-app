@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: /Dockerfile
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=30102001
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres'
+    container_name: db
+    command: --port 5432
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=30102001
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Volume để duy trì dữ liệu
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    labels:
+        # Tells Spring Boot “this is a Postgres service” for service-connection autoconfig
+      org.springframework.boot.service-connection: postgres
+
+volumes:
+  postgres_data:
