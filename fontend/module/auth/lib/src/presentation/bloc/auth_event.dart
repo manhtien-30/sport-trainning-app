@@ -5,9 +5,12 @@ abstract class AuthEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
-class OnUsernameChanged extends AuthEvent{
 
+class AuthLoginStarted extends AuthEvent{
+  String username;
+  String password;
+  AuthLoginStarted(this.username,this.password);
 }
-class AuthenticationLogInRequest extends AuthEvent{
+class AuthRegisterStarted extends AuthEvent{
 
 }

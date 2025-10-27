@@ -1,0 +1,12 @@
+name: fontend
+packages:
+  - module/*
+
+command:
+  bootstrap:
+    runPubGetInParallel: false
+
+scripts:
+  gen-l10n:
+    exec: flutter gen-l10n
+    ignoreErrors: true

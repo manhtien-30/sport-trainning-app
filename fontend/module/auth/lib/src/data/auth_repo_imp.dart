@@ -14,17 +14,9 @@ class AuthenticationRepositoryImp extends AuthenticationRepository{
   }
 
   @override
-  Future<void> logIn({required String username, required String password})
+  Future<bool> logIn({required String username, required String password})
   async{
-    // TODO: implement logIn
-    final response = await dio.post(
-      '/api/login',
-      data: {
-        'username' : username,
-        'password' : password
-      }
-    );
-    return response.data;
+    return true;
   }
 
   @override
