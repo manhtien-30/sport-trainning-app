@@ -12,6 +12,7 @@ dependencies:
     path: ./module/core
   auth:
     path: ./module/auth
+  get: ^4.7.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
