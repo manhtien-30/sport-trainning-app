@@ -1,13 +1,15 @@
 abstract class AuthState{
 }
 
-class LoginState extends AuthState{
+class AuthInitial extends AuthState{
 
 }
-
-class SignUpSuccess extends AuthState{
+class AuthLoginSuccess extends AuthState{
 
 }
-class SignUpFailure extends AuthState{
+class AuthLoginOnProgress extends AuthState{
+
+}
+class AuthLoginFailure extends AuthState{
 
 }

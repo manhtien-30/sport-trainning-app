@@ -9,7 +9,7 @@ abstract class AuthenticationRepository{
   Stream<AuthenticationStatus> get status;
   User? get currentUser;
   void dispose();
-  Future<void> logIn({
+  Future<bool> logIn({
     required String username,
     required String password
   });

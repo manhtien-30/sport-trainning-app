@@ -1,5 +1,9 @@
-class LoginDTO{
+class LoginRequestDTO{
   String username;
   String password;
-  LoginDTO(this.username,this.password);
+  LoginRequestDTO(this.username,this.password);
+}
+
+class SignUpRequestDTO{
+
 }
