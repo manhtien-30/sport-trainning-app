@@ -1,28 +1,49 @@
-name: fontend
+name: frontend
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 environment:
-  sdk: ^3.9.2
+  sdk: '^3.9.2'
 dependencies:
+  flutter_localizations: # Thư viện chính của Google
+    sdk: flutter
+  intl:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
   core:
-    path: ./module/core
+    path: ./modules/core
   auth:
-    path: ./module/auth
-  get: ^4.7.2
-workspace:
-  - module/core
-  - module/auth
+    path: ./modules/auth
+  order:
+    path: ./modules/order
+  profile:
+    path: ./modules/profile
+  payment:
+    path: ./modules/payment
+  flutter_native_splash: ^2.4.7
+  get: ^4.7.3
+  shared_preferences: ^2.2.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  melos: ^7.3.0
-
+  melos: ^3.4.0
 flutter:
+  generate: true
   uses-material-design: true
-
+  assets:
+    - image/
 melos:
+  command:
+    bootstrap:
+      run: melos exec -- flutter pub get
+      runPubGetInParallel: false
+
+  scripts:
+    version:
+      run: melos version --no-publish --yes
+    gen-l10n:
+      exec: flutter gen-l10n
+      ignoreErrors: true

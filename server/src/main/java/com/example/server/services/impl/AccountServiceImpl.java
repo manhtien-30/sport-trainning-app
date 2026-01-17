@@ -1,6 +1,7 @@
 package com.example.server.services.impl;
 
 import com.example.server.enties.dto.AccountDto;
+import com.example.server.enties.dto.ApiResponseDto;
 import com.example.server.enties.models.Account;
 import com.example.server.repositories.AccountProfilesRepository;
 import com.example.server.repositories.AccountRepository;
@@ -10,12 +11,14 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.beans.Transient;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -46,6 +49,19 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public ResponseEntity<ApiResponseDto<?>> getProfileDetails(UUID id) {
+        return ResponseEntity.ok(
+                ApiResponseDto.builder()
+                        .status("")
+                        .message("")
+                        .response(accountProfilesRepository.findById(id))
+                        .build()
+        );
+    }
+
+
+
+    @Override
     public Boolean existByEmail(String email) { return accountRepository.existsByEmail(email);
     }
 
@@ -54,30 +70,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.existsByUsername(username);
     }
 
-    @Override
-    public void updateAccountProfile(Account account) {
-
-    }
-
-    @Override
-    public Optional<Account> findByUsername(String username) {
-
-        return accountRepository.findByUsername(username);
-    }
-    @Override
-    public List<AccountDto> getListAccounts() {
-        return accountRepository.getListAccounts()
-                .stream()
-                .map(this::toAccountDto)
-                .collect(Collectors.toList());
-    }
-    @Override
-    public Boolean changePassword(String username, String password) {
-        Account account = accountRepository.findByUsername(username).orElseThrow(()-> new RuntimeException("User not found"));
-        account.setPassword(password);
-        accountRepository.save(account);
-        return true;
-    }
     private AccountDto toAccountDto(Account account) {
         return AccountDto.builder()
                 .accountId(account.getId())

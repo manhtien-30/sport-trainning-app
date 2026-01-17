@@ -1,54 +1,15 @@
-name: my_super_app
-
-# 1. Định nghĩa vị trí các packages
+name: frontend
 packages:
-  - lib/** # Chứa Host App, Example App
-  - module/** # Chứa Core, UI Kit
+  - modules/*
 
-# 2. Cấu hình lệnh Bootstrap (Quan trọng)
 command:
   bootstrap:
-    # Tự động link các package local thay vì tải từ pub.dev nếu trùng tên
-    usePubspecOverrides: true
-    # Chạy pub get song song (nhanh hơn)
-    runPubGetInParallel: true
+    run: melos exec -- flutter pub get
+    runPubGetInParallel: false
 
-# 3. Các kịch bản tự động hoá (Scripts)
 scripts:
-  # Lệnh: melos run get
-  get:
-    run: flutter pub get
-    exec:
-      concurrency: 5 # Chạy song song 5 process
-    description: "Chạy pub get cho toàn bộ dự án"
-
-  # Lệnh: melos run clean
-  clean:
-    run: flutter clean
-    exec:
-      concurrency: 5
-    description: "Dọn dẹp build cache"
-
-  # Lệnh: melos run gen (Cực kỳ hữu ích cho GetX/Bloc/JsonSerializable)
-  gen:
-    run: dart run build_runner build --delete-conflicting-outputs
-    exec:
-      # Chỉ chạy ở những package có dependency 'build_runner'
-      packageFilters:
-        dependsOn: build_runner
-    description: "Chạy build_runner sinh code cho toàn bộ module"
-
-  # Lệnh: melos run analyze
-  analyze:
-    run: flutter analyze .
-    exec:
-      failFast: true # Dừng ngay nếu gặp lỗi
-    description: "Kiểm tra lỗi code (Linting)"
-
-  # Lệnh: melos run test
-  test:
-    run: flutter test
-    exec:
-      dirExists: test # Chỉ chạy ở package nào có thư mục test
-      failFast: true
-    description: "Chạy Unit Test toàn bộ dự án"
+  version:
+    run: melos version --no-publish --yes
+  gen-l10n:
+    exec: flutter gen-l10n
+    ignoreErrors: true
