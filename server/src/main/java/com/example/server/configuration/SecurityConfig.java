@@ -1,4 +1,5 @@
 package com.example.server.configuration;
+
 import com.example.server.services.impl.UserDetailsServiceImpl;
 import com.example.server.utils.security.AuthEntryPointJwt;
 import com.example.server.utils.security.AuthenticatedTokenFilter;
@@ -19,7 +20,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-
 @Configuration
 @EnableMethodSecurity()
 @EnableWebSecurity
@@ -34,6 +34,7 @@ public class SecurityConfig {
     public AuthenticatedTokenFilter authenticationJwtTokenFilter() {
         return new AuthenticatedTokenFilter();
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -52,26 +53,27 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    http    .csrf(AbstractHttpConfigurer::disable)
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth ->
-                    auth
-                            .requestMatchers("/api/auth/**").permitAll()
-                            //.requestMatchers("/api/test/**").hasRole("ROLE_ADMIN")
-                            .anyRequest().authenticated()
-            )
-            .formLogin(form ->
-                    form.loginPage("/api/auth/signin").permitAll())
-            .logout(logout ->
-                    logout.logoutUrl("/api/auth/signout").permitAll());
+        http.csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers("/api/auth/**").permitAll()
+                                //.requestMatchers("/api/test/**").hasRole("ROLE_ADMIN")
+                                .anyRequest().authenticated()
+                )
+                .formLogin(form ->
+                        form.loginPage("/api/auth/signin").permitAll())
+                .logout(logout ->
+                        logout.logoutUrl("/api/auth/signout").permitAll());
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-}
+    }
 }

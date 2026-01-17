@@ -1,5 +1,3 @@
-# Use a JRE matching your build toolchain; adjust if you build for a different target
-FROM eclipse-temurin:23-jre
-ARG JAR_FILE=*.jar
-COPY ${JAR_FILE} application.jar
-ENTRYPOINT ["java", "-jar", "application.jar"]
+FROM openjdk:23-jdk-slim
+COPY target/server-*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]

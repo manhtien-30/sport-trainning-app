@@ -20,6 +20,9 @@ public class RoleFactory {
             case "moderator" -> {
                 return roleRepository.findByName(ERole.ROLE_SUPER_ADMIN);
             }
+            case "driver" ->{
+                return roleRepository.findByName(ERole.ROLE_DRIVER);
+            }
             default -> throw new IllegalArgumentException("Invalid role");
         }
     }
