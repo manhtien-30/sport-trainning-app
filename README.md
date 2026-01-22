@@ -1,4 +1,4 @@
-# Sport Training App
+# Delivery App usinng micro frontend
 
 Monorepo containing:
 - server: Java Spring Boot backend (Maven, Java 21)
